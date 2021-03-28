@@ -12,7 +12,6 @@ function App() {
     const [prediction, setPrediction] = useState();
     const [context, setContext] = useState();
     const [canvas, setCanvas] = useState();
-    const imageElement = useRef();
 
     const onClear = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -26,23 +25,19 @@ function App() {
         setCanvas(canvas);
         setContext(context);
 
-        imageElement.current.onload = function () {
-            const tensor = tf.image.resizeBilinear(
-                tf.browser.fromPixels(canvas, IMAGE_CHANNELS),
-                [IMAGE_SIZE, IMAGE_SIZE]
-            );
+        const tensor = tf.image.resizeBilinear(
+            tf.browser.fromPixels(canvas, IMAGE_CHANNELS),
+            [IMAGE_SIZE, IMAGE_SIZE]
+        );
 
-            model
-                .predict(tensor.reshape([1, 28, 28, IMAGE_CHANNELS]))
-                .array()
-                .then(function (scores) {
-                    scores = scores[0];
-                    console.table(scores);
-                    setPrediction(scores.indexOf(Math.max(...scores)));
-                });
-        };
-
-        imageElement.current.src = canvas.toDataURL("image/png");
+        model
+            .predict(
+                tensor.reshape([1, IMAGE_SIZE, IMAGE_SIZE, IMAGE_CHANNELS])
+            )
+            .array()
+            .then(function ([scores]) {
+                setPrediction(scores.indexOf(Math.max(...scores)));
+            });
     };
 
     return (
@@ -68,7 +63,6 @@ function App() {
                     </button>
                 </>
             )}
-            <img ref={imageElement} />
         </div>
     );
 }
