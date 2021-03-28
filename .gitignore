@@ -1,2 +1,5 @@
 __pycache__
 src/wandb
+.cache
+node_modules
+dist
