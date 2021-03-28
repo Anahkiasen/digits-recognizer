@@ -10,7 +10,8 @@
         "prettier": "^2.2.1"
     },
     "scripts": {
-        "build": "parcel public/index.html",
-        "convert": "tensorflowjs_converter --input_format keras public/models/model-best.h5 public/models/"
+        "build": "parcel build src/index.html",
+        "build:watch": "parcel watch src/index.html",
+        "convert": "tensorflowjs_converter --input_format keras src/model-best.h5 dist/"
     }
 }

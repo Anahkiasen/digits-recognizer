@@ -1,5 +1,5 @@
-__pycache__
-src/wandb
 .cache
-node_modules
+__pycache__
 dist
+node_modules
+src/wandb
