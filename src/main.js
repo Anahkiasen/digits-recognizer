@@ -33,32 +33,40 @@ function App() {
             <h1 className={"mb-5"}>Shitty Digits Recognizer</h1>
             <CanvasDraw
                 ref={canvas}
-                className="d-block border rounded shadow mb-5"
                 brushColor={"#fff"}
-                style={{ backgroundColor: "black" }}
-                canvasWidth={200}
-                canvasHeight={200}
-                lazyRadius={0}
                 brushRadius={10}
+                canvasHeight={200}
+                canvasWidth={200}
+                className="img-thumbnail rounded shadow mb-5"
                 hideGrid
+                lazyRadius={0}
                 onChange={onDraw}
+                style={{ backgroundColor: "black" }}
             />
-            {prediction !== null && (
-                <>
-                    <div className="alert alert-success">
-                        This is a <strong>{prediction}</strong>
-                    </div>
+            <div className="btn-group mr-2">
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
                     <button
-                        className="btn btn-info"
-                        onClick={() => {
-                            canvas.current.clear();
-                            setPrediction(null);
-                        }}
+                        key={number}
+                        type="button"
+                        disabled
+                        className={`btn btn-${
+                            number === prediction ? "primary" : "secondary"
+                        }`}
                     >
-                        Clear
+                        {number}
                     </button>
-                </>
-            )}
+                ))}
+                <button
+                    className="btn btn-danger"
+                    disabled={prediction === null}
+                    onClick={() => {
+                        canvas.current.clear();
+                        setPrediction(null);
+                    }}
+                >
+                    Clear
+                </button>
+            </div>
         </div>
     );
 }
