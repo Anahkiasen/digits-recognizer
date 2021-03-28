@@ -1,8 +1,10 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import * as tf from "@tensorflow/tfjs";
 import React, { useRef, useState } from "react";
 import CanvasDraw from "react-canvas-draw";
 import ReactDOM from "react-dom";
 import useModel from "./useModel";
+import { Button, ButtonGroup } from "react-bootstrap";
 
 const IMAGE_SIZE = 28;
 const IMAGE_CHANNELS = 1;
@@ -43,21 +45,20 @@ function App() {
                 onChange={onDraw}
                 style={{ backgroundColor: "black" }}
             />
-            <div className="btn-group mr-2">
+            <ButtonGroup className="mr-2">
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
-                    <button
+                    <Button
                         key={number}
-                        type="button"
-                        disabled
-                        className={`btn btn-${
+                        variant={
                             number === prediction ? "primary" : "secondary"
-                        }`}
+                        }
+                        disabled
                     >
                         {number}
-                    </button>
+                    </Button>
                 ))}
-                <button
-                    className="btn btn-danger"
+                <Button
+                    variant={"danger"}
                     disabled={prediction === null}
                     onClick={() => {
                         canvas.current.clear();
@@ -65,8 +66,8 @@ function App() {
                     }}
                 >
                     Clear
-                </button>
-            </div>
+                </Button>
+            </ButtonGroup>
         </div>
     );
 }
