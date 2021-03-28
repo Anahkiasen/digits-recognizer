@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 class L2 {
     static className = "L2";
@@ -11,8 +11,14 @@ class L2 {
 export default function useModel() {
     const [model, setModel] = useState();
 
-    tf.serialization.registerClass(L2);
-    tf.loadLayersModel("model.json").then(setModel);
+    useEffect(() => {
+        if (model) {
+            return;
+        }
+
+        tf.serialization.registerClass(L2);
+        tf.loadLayersModel("model.json").then(setModel);
+    }, [model]);
 
     return model;
 }
