@@ -1,15 +1,13 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import * as tf from "@tensorflow/tfjs";
 import React, { useRef, useState } from "react";
-import CanvasDraw from "react-canvas-draw";
-import ReactDOM from "react-dom";
-import useModel from "./useModel";
 import { Button, ButtonGroup } from "react-bootstrap";
+import CanvasDraw from "react-canvas-draw";
+import useModel from "../useModel";
 
 const IMAGE_SIZE = 28;
 const IMAGE_CHANNELS = 1;
 
-function App() {
+export default function App() {
     const model = useModel();
     const canvas = useRef();
     const [prediction, setPrediction] = useState(null);
@@ -71,5 +69,3 @@ function App() {
         </div>
     );
 }
-
-ReactDOM.render(<App />, document.getElementById("app"));
