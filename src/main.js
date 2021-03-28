@@ -9,24 +9,12 @@ const IMAGE_CHANNELS = 1;
 
 function App() {
     const model = useModel();
-    const [prediction, setPrediction] = useState();
-    const [context, setContext] = useState();
-    const [canvas, setCanvas] = useState();
-
-    const onClear = () => {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        setPrediction(null);
-    };
+    const canvas = useRef();
+    const [prediction, setPrediction] = useState(null);
 
     const onDraw = (event) => {
-        const { drawing: canvas } = event.canvas;
-        const { drawing: context } = event.ctx;
-
-        setCanvas(canvas);
-        setContext(context);
-
         const tensor = tf.image.resizeBilinear(
-            tf.browser.fromPixels(canvas, IMAGE_CHANNELS),
+            tf.browser.fromPixels(event.canvas.drawing, IMAGE_CHANNELS),
             [IMAGE_SIZE, IMAGE_SIZE]
         );
 
@@ -42,23 +30,31 @@ function App() {
 
     return (
         <div className="d-flex flex-column align-items-center">
+            <h1 className={"mb-5"}>Shitty Digits Recognizer</h1>
             <CanvasDraw
-                className="d-block border rounded mb-5"
+                ref={canvas}
+                className="d-block border rounded shadow mb-5"
                 brushColor={"#fff"}
                 style={{ backgroundColor: "black" }}
-                canvasWidth={100}
-                canvasHeight={100}
+                canvasWidth={200}
+                canvasHeight={200}
                 lazyRadius={0}
-                brushRadius={5}
+                brushRadius={10}
                 hideGrid
                 onChange={onDraw}
             />
             {prediction !== null && (
                 <>
-                    <div className="d-block alert alert-success">
-                        {prediction}
+                    <div className="alert alert-success">
+                        This is a <strong>{prediction}</strong>
                     </div>
-                    <button onClick={onClear} className="btn btn-info">
+                    <button
+                        className="btn btn-info"
+                        onClick={() => {
+                            canvas.current.clear();
+                            setPrediction(null);
+                        }}
+                    >
                         Clear
                     </button>
                 </>
