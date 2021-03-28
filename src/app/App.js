@@ -2,7 +2,7 @@ import * as tf from "@tensorflow/tfjs";
 import React, { useRef, useState } from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import CanvasDraw from "react-canvas-draw";
-import useModel from "../useModel";
+import useModel from "./useModel";
 
 const IMAGE_SIZE = 28;
 const IMAGE_CHANNELS = 1;
