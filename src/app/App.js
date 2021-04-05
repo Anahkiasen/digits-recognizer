@@ -66,6 +66,14 @@ export default function App() {
                     Clear
                 </Button>
             </ButtonGroup>
+            <p className={"mt-5"}>
+                <a
+                    href="https://github.com/Anahkiasen/digits-recognizer"
+                    target="_blank"
+                >
+                    Source code
+                </a>
+            </p>
         </div>
     );
 }
